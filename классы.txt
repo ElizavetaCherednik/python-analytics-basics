@@ -1,0 +1,84 @@
+class Rectangle:
+    def __init__(self, first, second):
+        (x1, y1), (x2, y2) = first, second
+        self.x1, self.x2 = sorted((x1, x2))
+        self.y1, self.y2 = sorted((y1, y2))
+        self.width = self.x2 - self.x1
+        self.height = self.y2 - self.y1
+
+    def perimeter(self):
+        return round((self.width + self.height) * 2, 2)
+
+    def area(self):
+        return round(self.height * self.width, 2)
+
+    def get_pos(self):
+        return (round(self.x1, 2), round(self.y2, 2))
+
+    def get_size(self):
+        return (round(self.width, 2), round(self.height, 2))
+
+    def move(self, dx, dy):
+        self.x1 += dx
+        self.x2 += dx
+        self.y1 += dy
+        self.y2 += dy
+
+    def resize(self, width, height):
+        self.width = width
+        self.height = height
+        self.x2 = self.x1 + width
+        self.y1 = self.y2 - height
+
+    def turn(self):
+        center_x = (self.x1 + self.x2) / 2
+        center_y = (self.y1 + self.y2) / 2
+        
+        new_x1 = center_x + (self.y1 - center_y)
+        new_y1 = center_y - (self.x1 - center_x)
+        new_x2 = center_x + (self.y2 - center_y)
+        new_y2 = center_y - (self.x2 - center_x)
+        
+        self.x1, self.x2 = sorted((new_x1, new_x2))
+        self.y1, self.y2 = sorted((new_y1, new_y2))
+        self.width = self.x2 - self.x1
+        self.height = self.y2 - self.y1
+
+    def scale(self, factor):
+        center_x = (self.x1 + self.x2) / 2
+        center_y = (self.y1 + self.y2) / 2
+        
+        self.x1 = center_x + (self.x1 - center_x) * factor
+        self.x2 = center_x + (self.x2 - center_x) * factor
+        self.y1 = center_y + (self.y1 - center_y) * factor
+        self.y2 = center_y + (self.y2 - center_y) * factor
+        self.width = self.x2 - self.x1
+        self.height = self.y2 - self.y1
+
+
+# Демонстрация работы класса
+if __name__ == "__main__":
+    # Создаём прямоугольник по двум точкам
+    rect = Rectangle((1, 1), (4, 5))
+    
+    print("=== Работа с прямоугольником ===")
+    print(f"Позиция (левая верхняя): {rect.get_pos()}")
+    print(f"Размер (ширина, высота): {rect.get_size()}")
+    print(f"Периметр: {rect.perimeter()}")
+    print(f"Площадь: {rect.area()}")
+    
+    print("\n=== Перемещение ===")
+    rect.move(2, 3)
+    print(f"После move(2,3): позиция {rect.get_pos()}, размер {rect.get_size()}")
+    
+    print("\n=== Изменение размера ===")
+    rect.resize(5, 3)
+    print(f"После resize(5,3): позиция {rect.get_pos()}, размер {rect.get_size()}")
+    
+    print("\n=== Поворот на 90° ===")
+    rect.turn()
+    print(f"После поворота: позиция {rect.get_pos()}, размер {rect.get_size()}")
+    
+    print("\n=== Масштабирование ===")
+    rect.scale(2)
+    print(f"После scale(2): позиция {rect.get_pos()}, размер {rect.get_size()}")
