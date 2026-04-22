@@ -1,0 +1,29 @@
+def secret_replace(text, **rules):
+    counters = {key: 0 for key in rules}
+    result = []
+    
+    for char in text:
+        if char in rules:
+            rule = rules[char]
+            idx = counters[char]
+            replacement = rule[idx % len(rule)]
+            result.append(replacement)
+            counters[char] += 1
+        else:
+            result.append(char)
+    
+    return ''.join(result)
+
+
+# Демонстрация работы
+if __name__ == "__main__":
+    # Пример из условия
+    result = secret_replace("Hello, world!", l=("hi", "y"), o=("123", "z"))
+    print(f'secret_replace("Hello, world!", l=("hi", "y"), o=("123", "z"))')
+    print(f'Результат: {result}')
+    print(f'Ожидалось: Hehiy123, wzrhid!')
+    print(f'Совпадение: {result == "Hehiy123, wzrhid!"}')
+    
+    # Ещё пример
+    result2 = secret_replace("abc", a=("x", "y"), b=("z",))
+    print(f'\nsecret_replace("abc", a=("x", "y"), b=("z",)) -> {result2}')
