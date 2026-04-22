@@ -1,0 +1,22 @@
+if __name__ == "__main__":
+    # Исходный словарь
+    data = {'First 1': 2, 'second:': (2, 1, 1), 'THIRD': [1, 2, 3]}
+    
+    print(f'Исходный словарь: {data}')
+    
+    # Применяем lambda к каждому элементу словаря
+    result = dict(map(
+        lambda krt: (''.join(c for c in krt[0].lower() if c.isalpha()),
+                     sum(krt[1]) if hasattr(krt[1], '__iter__') else krt[1]),
+        data.items()
+    ))
+    
+    print(f'Результат: {result}')
+    print(f'Ожидалось: {{"first": 2, "second": 4, "third": 6}}')
+    
+    # Объяснение работы:
+    print("\nКак работает lambda:")
+    print("- 'First 1' -> 'first' (удалены цифры, нижний регистр)")
+    print("- 2 -> 2 (не итерируемое, остаётся как есть)")
+    print("- (2,1,1) -> сумма = 4")
+    print("- [1,2,3] -> сумма = 6")
