@@ -1,0 +1,10 @@
+def recursive_digit_sum(n):
+    if n == 0:
+        return 0
+    return recursive_digit_sum(n // 10) + (n % 10)
+
+
+if __name__ == "__main__":
+    numbers = [123, 5, 99, 4567]
+    for num in numbers:
+        print(f"recursive_digit_sum({num}) = {recursive_digit_sum(num)}")
